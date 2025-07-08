@@ -55,7 +55,7 @@ export default function ClassTimerDashboard() {
   };
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    return date.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
   };
 
   const getTimeRemaining = () => {
