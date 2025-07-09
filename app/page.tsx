@@ -28,22 +28,6 @@ export default function ClassTimerDashboard() {
   const [showAnimation, setShowAnimation] = useState(false);
   const [lastMessageId, setLastMessageId] = useState<number | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    loadMessages();
-    loadActiveTimer();
-    const messageInterval = setInterval(loadMessages, 5000);
-    const timerInterval = setInterval(loadActiveTimer, 2000);
-
-    return () => {
-      clearInterval(timer);
-      clearInterval(messageInterval);
-      clearInterval(timerInterval);
-    };
-  }, [loadMessages]);
 
   const loadMessages = useCallback(async () => {
     try {
@@ -65,6 +49,23 @@ export default function ClassTimerDashboard() {
       console.error('Error loading messages:', error);
     }
   }, [lastMessageId]);
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    loadMessages();
+    loadActiveTimer();
+    const messageInterval = setInterval(loadMessages, 5000);
+    const timerInterval = setInterval(loadActiveTimer, 2000);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(messageInterval);
+      clearInterval(timerInterval);
+    };
+  }, [loadMessages]);
 
   const loadActiveTimer = async () => {
     try {
