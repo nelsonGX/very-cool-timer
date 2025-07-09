@@ -3,15 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Clock, MessageCircle, Send, Trash2 } from 'lucide-react';
 
-interface Timer {
-  id: number;
-  title: string;
-  startTime: string;
-  endTime: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface Message {
   id: number;
@@ -160,24 +151,6 @@ export default function AdminPanel() {
     const seconds = totalSeconds % 60;
     
     return { hours, minutes, seconds, totalSeconds };
-  };
-
-  const getProgress = () => {
-    if (!startTime || !endTime) return 0;
-    
-    const now = new Date();
-    const [startHours, startMinutes] = startTime.split(':').map(Number);
-    const [endHours, endMinutes] = endTime.split(':').map(Number);
-    
-    const startDate = new Date();
-    startDate.setHours(startHours, startMinutes, 0, 0);
-    const endDate = new Date();
-    endDate.setHours(endHours, endMinutes, 0, 0);
-    
-    const totalDuration = endDate.getTime() - startDate.getTime();
-    const elapsed = now.getTime() - startDate.getTime();
-    
-    return Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
   };
 
   const timeRemaining = getTimeRemaining();
