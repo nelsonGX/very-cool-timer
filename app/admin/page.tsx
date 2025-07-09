@@ -30,14 +30,12 @@ export default function AdminPanel() {
   const [isConfigured, setIsConfigured] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-  const [timers, setTimers] = useState<Timer[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     loadMessages();
-    loadTimers();
     return () => clearInterval(timer);
   }, []);
 
@@ -51,15 +49,6 @@ export default function AdminPanel() {
     }
   };
 
-  const loadTimers = async () => {
-    try {
-      const response = await fetch('/api/timers');
-      const data = await response.json();
-      setTimers(data);
-    } catch (error) {
-      console.error('Error loading timers:', error);
-    }
-  };
 
   const handleStart = async () => {
     if (!startTime || !endTime) {
@@ -97,7 +86,6 @@ export default function AdminPanel() {
       if (response.ok) {
         setIsConfigured(true);
         setIsRunning(true);
-        loadTimers();
       }
     } catch (error) {
       console.error('Error creating timer:', error);
@@ -193,7 +181,6 @@ export default function AdminPanel() {
   };
 
   const timeRemaining = getTimeRemaining();
-  const progress = getProgress();
   const isClassActive = isRunning && timeRemaining.totalSeconds > 0;
   const isClassEnded = isConfigured && timeRemaining.totalSeconds === 0;
 

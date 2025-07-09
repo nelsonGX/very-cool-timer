@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Clock, MessageCircle } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Clock, MessageCircle } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -43,9 +43,9 @@ export default function ClassTimerDashboard() {
       clearInterval(messageInterval);
       clearInterval(timerInterval);
     };
-  }, []);
+  }, [loadMessages]);
 
-  const loadMessages = async () => {
+  const loadMessages = useCallback(async () => {
     try {
       const response = await fetch('/api/messages');
       const data = await response.json();
@@ -64,7 +64,7 @@ export default function ClassTimerDashboard() {
     } catch (error) {
       console.error('Error loading messages:', error);
     }
-  };
+  }, [lastMessageId]);
 
   const loadActiveTimer = async () => {
     try {
